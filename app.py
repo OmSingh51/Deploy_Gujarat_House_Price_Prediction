@@ -1,58 +1,49 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 import pickle
 
-# Load model, scaler and columns
-with open("model.pkl", "rb") as f:
-    model = pickle.load(f)
+# ---------------------------
+# Load the Trained Model
+# ---------------------------
+@st.cache_resource
+def load_model():
+    with open("model.pkl", "rb") as file:   # Change "model.pkl" to your actual filename
+        loaded_model = pickle.load(file)
+    return loaded_model
 
-with open("scaler.pkl", "rb") as f:
-    scaler = pickle.load(f)
+model = load_model()
 
-with open("model_columns.pkl", "rb") as f:
-    model_columns = pickle.load(f)
+# ---------------------------
+# Web App UI
+# ---------------------------
+st.title("🏠 Gujarat House Price Prediction")
+st.write("Enter the details below to predict the house price.")
 
-# Sample city and area mapping (same as your training data)
-city_area_mapping = {
-    "Ahmedabad": ["Satellite", "Bopal", "Maninagar", "Gota", "Navrangpura"],
-    "Surat": ["Adajan", "Vesu", "City Light", "Piplod", "Katargam"],
-    "Vadodara": ["Alkapuri", "Gotri", "Fatehgunj", "Waghodia", "Manjalpur"],
-    "Rajkot": ["Kalavad Road", "Mavdi", "Raiya Road", "150 Feet Ring Road", "University Road"],
-    "Bhavnagar": ["Kaliabid", "Panwadi", "Vidhyanagar", "Nari Road", "Chitra"]
-}
+# ---------------------------
+# User Inputs
+# ---------------------------
+# Replace these with your actual feature names from training
+feature_inputs = {}
 
-furnishing_options = ["Unfurnished", "Semi-Furnished", "Fully Furnished"]
-property_types = ["Apartment", "Villa", "Independent House"]
+# Example feature names (change these to match your dataset columns)
+columns = ["Area", "Bedrooms", "Bathrooms", "Stories", "Parking"]
 
-# Streamlit UI
-st.title("🏠 Gujarat House Price Predictor")
+for col in columns:
+    feature_inputs[col] = st.number_input(
+        f"{col}",
+        min_value=0.0,
+        value=0.0
+    )
 
-city = st.selectbox("Select City", list(city_area_mapping.keys()))
-area = st.selectbox("Select Area", city_area_mapping[city])
-bhk = st.selectbox("BHK", [1, 2, 3, 4])
-sqft = st.number_input("Total Square Feet", min_value=300, max_value=10000)
-furnishing = st.selectbox("Furnishing Type", furnishing_options)
-property_type = st.selectbox("Property Type", property_types)
-age = st.slider("Age of Property (Years)", 0, 50)
+# Convert input to DataFrame for prediction
+input_df = pd.DataFrame([feature_inputs])
 
-if st.button("Predict Price"):
-    input_dict = {
-        "BHK": bhk,
-        "Square_Feet": sqft,
-        "Age_of_Property": age,
-        f"City_{city}": 1,
-        f"Area_{area}": 1,
-        f"Furnishing_{furnishing}": 1,
-        f"Property_Type_{property_type}": 1
-    }
+# ---------------------------
+# Prediction
+# ---------------------------
+if st.button("🔮 Predict Price"):
+    prediction = model.predict(input_df)[0]
+    st.success(f"💰 Estimated House Price: ₹{prediction:,.2f}")
 
-    # Prepare input DataFrame with all model columns
-    input_df = pd.DataFrame([input_dict])
-    input_df = input_df.reindex(columns=model_columns, fill_value=0)
-
-    # Scale and predict
-    input_scaled = scaler.transform(input_df)
-    prediction = model.predict(input_scaled)[0]
-
-    st.success(f"🏷️ Estimated House Price: ₹{int(prediction):,}")
+st.markdown("---")
+st.caption("Powered by Machine Learning | Streamlit App")
