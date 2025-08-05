@@ -37,19 +37,19 @@ Install the required dependencies:</br>
 The project includes evaluation metrics for each model (MAE, MSE, R² score) which can be viewed in the application or in the model training code.</br>
 
 <h3>File Structure</h3></br>
-project-root/
-│
-├── data/
-│   └── gujarat_house_prices.csv       # Dataset
-│
-├── models/
-│   ├── linear_model.pkl               # Linear Regression model
-│   ├── random_forest.pkl              # Random Forest model
-│   ├── svm_model.pkl                  # SVM model
-│   ├── xgboost_model.pkl              # XGBoost model
-│   └── gradient_boosting.pkl          # Gradient Boosting model
-│
-├── app.py                             # Streamlit application
-├── requirements.txt                   # Dependencies
-└── README.md                          # This file
+project-root/ </br>
+│</br>
+├── data/</br>
+│   └── gujarat_house_prices.csv       # Dataset</br>
+│</br>
+├── models/</br>
+│   ├── linear_model.pkl               # Linear Regression model</br>
+│   ├── random_forest.pkl              # Random Forest model</br>
+│   ├── svm_model.pkl                  # SVM model</br>
+│   ├── xgboost_model.pkl              # XGBoost model</br>
+│   └── gradient_boosting.pkl          # Gradient Boosting model</br>
+│</br>
+├── app.py                             # Streamlit application</br>
+├── requirements.txt                   # Dependencies</br>
+└── README.md                          # This file</br>
 
