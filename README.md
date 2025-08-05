@@ -20,11 +20,9 @@ The dataset (gujarat_house_prices.csv) contains the following features:</br>
 - Property_Type: Type of property (Apartment, Villa, Independent House)</br>
 - Age_of_Property: Age of the property in years</br>
 - Price: Target variable - price of the property in INR</br>
-
 <h3>Installation</h3></br>
 Install the required dependencies:</br>
-    pip install -r requirements.txt
-
+    pip install -r requirements.txt</br>
 <h3>Usage</h3></br>
 1. Run the Streamlit application:</br>
     streamlit run app.py</br>
@@ -32,10 +30,8 @@ Install the required dependencies:</br>
     - Input property details using the interactive form</br>
     - Select which model to use for prediction</br>
     - View the predicted price</br>
-
 <h3>Models Performance</h3></br>
 The project includes evaluation metrics for each model (MAE, MSE, R² score) which can be viewed in the application or in the model training code.</br>
-
 <h3>File Structure</h3></br>
 project-root/ </br>
 │</br>
@@ -52,4 +48,3 @@ project-root/ </br>
 ├── app.py                             # Streamlit application</br>
 ├── requirements.txt                   # Dependencies</br>
 └── README.md                          # This file</br>
-
